@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html>
   <head>
@@ -13,10 +13,10 @@
     <script src="https://cdn.neo4jlabs.com/neovis.js/v1.5.0/neovis.js"></script>
 
     <script
-            src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous"></script>
-
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"
+    ></script>
   </head>
   <script>
     var viz;
@@ -31,62 +31,62 @@
           Entity: {
             caption: "name",
             font: {
-                size: 12,
-                color: "#000000"
-            },
+              size: 12,
+              color: "#000000"
+            }
           },
           Officer: {
             caption: "name",
             font: {
-                size: 12,
-                color: "#000000"
-            },
+              size: 12,
+              color: "#000000"
+            }
           },
           Intermediary: {
             caption: "name",
             font: {
-                size: 12,
-                color: "#000000"
-            },
+              size: 12,
+              color: "#000000"
+            }
           },
           Other: {
             caption: "name",
             font: {
-                size: 12,
-                color: "#000000"
-            },
+              size: 12,
+              color: "#000000"
+            }
           },
           Address: {
             caption: "name",
             font: {
-                size: 12,
-                color: "#000000"
-            },
+              size: 12,
+              color: "#000000"
+            }
           }
         },
         relationships: {
           CONNECTED_TO: {
-            thickness: "0.1",
+            thickness: "0.1"
           },
           INTERMEDIARY_OF: {
-            thickness: "0.1",
+            thickness: "0.1"
           },
           OFFICER_OF: {
-            thickness: "0.1",
+            thickness: "0.1"
           },
           REGISTERED_ADDRESS: {
             thickness: "0.1",
             font: {
-                size: 8,
-                color: "#000000"
-            },
+              size: 8,
+              color: "#000000"
+            }
           },
           SAME_ID_AS: {
-            thickness: "0.1",
+            thickness: "0.1"
           },
           SAME_NAME_AS: {
-            thickness: "0.1",
-          },
+            thickness: "0.1"
+          }
         },
         arrows: true,
         initial_cypher: "MATCH p=()-[*]->() RETURN p LIMIT 25"
@@ -97,101 +97,126 @@
       console.log(viz);
     }
 
-    $(document).ready(function(){
-      $('input[type="radio"]').click(function(){
-          var inputValue = $(this).attr("value");
-          var targetBox = $("." + inputValue);
-          $(".box").not(targetBox).hide();
-          $(targetBox).show();
+    $(document).ready(function() {
+      $('input[type="radio"]').click(function() {
+        var inputValue = $(this).attr("value");
+        var targetBox = $("." + inputValue);
+        $(".box")
+          .not(targetBox)
+          .hide();
+        $(targetBox).show();
       });
-  });
+    });
   </script>
   <body onload="draw()">
     <div id="viz"></div>
+
+    <input type="submit" value="Stop Animation" id="stabilize" /><br /><br />
+
+    <div>
+      <h2>Explanation of Data Model:</h2>
+      <b>Entity - </b> A company, trust or fund created in a low-tax, offshore
+      jurisdiction by an agent<br />
+      <b>Officer - </b> People or companies who play a role in an offshore
+      entity<br />
+      <b>Address - </b> Addresses<br />
+      <b>Intermdiary - </b> Law-firms or middlemen that asks an offshore service
+      provider to create an offshore firm for a client.<br />
+      <br />
+    </div>
+
+    <b>Pick an option below to begin exploring data:</b><br /><br />
+
+    <div>
+      <label
+        ><input
+          type="radio"
+          name="cypherRadio"
+          value="single"
+          id="single"
+          checked="true"
+        />
+        Search for Node</label
+      >
+      <label
+        ><input
+          type="radio"
+          name="cypherRadio"
+          value="connection"
+          id="connection"
+        />
+        Search for connection between Nodes</label
+      >
+      <label
+        ><input type="radio" name="cypherRadio" value="query" id="query" />
+        Cypher Query</label
+      >
+    </div>
+
+    <div class="single box">
+      Node (case-insensitive): <input type="text" id="node" /><br />
+    </div>
+    <div class="connection box" hidden="true">
+      Node 1 (case-insensitive): <input type="text" id="entity1" /><br />
+      Node 2 (case-insensitive): <input type="text" id="entity2" /><br />
+    </div>
+    <div class="query box" hidden="true">
+      Cypher query: <textarea rows="4" cols="50" id="cypher"></textarea><br />
+    </div>
+
+    Num Results: <input type="number" id="limit" value="25" /> (Keep less than
+    1000) <br /><br />
+    <input type="submit" value="Search" id="reload" />
   </body>
-</html>
 
-<input type="submit" value="Stop Animation" id="stabilize"><br><br>
-
-
-<b>Pick an option below to begin exploring data:</b><br><br>
-
-<div>
-    <label><input type="radio" name="cypherRadio" value="single" id="single" checked="true"> Search for Node</label>
-    <label><input type="radio" name="cypherRadio" value="connection" id="connection"> Search for connection between Nodes</label>
-    <label><input type="radio" name="cypherRadio" value="query" id="query"> Cypher Query</label>
-</div>
-
-<div class="single box">
-    Node (case-insensitive): <input type="text" id="node"><br>
-
-</div>
-<div class="connection box" hidden="true">
-    Node 1 (case-insensitive): <input type="text" id="entity1"><br>
-    Node 2 (case-insensitive): <input type="text" id="entity2"><br>
-</div>
-<div class="query box" hidden="true">
-  Cypher query: <textarea rows="4" cols=50 id="cypher"></textarea><br>
-</div>
-
-Num Results: <input type="number" id="limit" value="25"> (Keep less than 1000) <br><br>
-<input type="submit" value="Search" id="reload">
-
-
-</body>
-
-<script>
-  function getCypherSingle(node, limit) {
-    var cypher = `
-      MATCH p=(a)-[*]->()
-      WHERE a.name =~ '(?i)${node}.*'
-      RETURN p
-      LIMIT ${limit}
-    `;
-    return cypher
-  }
-
-  function getCypherConnection(entity1, entity2, limit) {
-    var cypher = `
-      MATCH (a:Officer),(b:Officer)
-      WHERE a.name CONTAINS '${entity1}' 
-      AND b.name CONTAINS '${entity2}'
-      MATCH p=allShortestPaths((a)-[:OFFICER_OF|:INTERMEDIARY_OF|:REGISTERED_ADDRESS*..10]-(b))
-      RETURN p
-      LIMIT 50
-    `;
-    return cypher
-  }
-
-
-	$("#reload").click(function() {
-    var limit = $("#limit").val();
-    var cypher = ""
-
-    if (document.getElementById('single').checked) {
-      var node = $("#node").val();
-      cypher = getCypherSingle(node, limit);
-    } else if (document.getElementById('connection').checked) {
-      var entity1 = $("#entity1").val();
-      var entity2 = $("#entity2").val();
-      cypher = getCypherConnection(entity1, entity2, limit);
-    } else if (document.getElementById('query').checked) {
-      cypher = $("#cypher").val();
+  <script>
+    function getCypherSingle(node, limit) {
+      var cypher = `
+        MATCH p=(a)-[*]->()
+        WHERE a.name =~ '(?i)${node}.*'
+        RETURN p
+        LIMIT ${limit}
+      `;
+      return cypher;
     }
 
-		if (cypher.length > 3) {
-			viz.renderWithCypher(cypher);
-		} else {
-			console.log("reload");
-			viz.reload();
+    function getCypherConnection(entity1, entity2, limit) {
+      var cypher = `
+        MATCH (a:Officer),(b:Officer)
+        WHERE a.name CONTAINS '${entity1}' 
+        AND b.name CONTAINS '${entity2}'
+        MATCH p=allShortestPaths((a)-[:OFFICER_OF|:INTERMEDIARY_OF|:REGISTERED_ADDRESS*..10]-(b))
+        RETURN p
+        LIMIT 50
+      `;
+      return cypher;
+    }
 
-		}
+    $("#reload").click(function() {
+      var limit = $("#limit").val();
+      var cypher = "";
 
-	});
+      if (document.getElementById("single").checked) {
+        var node = $("#node").val();
+        cypher = getCypherSingle(node, limit);
+      } else if (document.getElementById("connection").checked) {
+        var entity1 = $("#entity1").val();
+        var entity2 = $("#entity2").val();
+        cypher = getCypherConnection(entity1, entity2, limit);
+      } else if (document.getElementById("query").checked) {
+        cypher = $("#cypher").val();
+      }
 
-	$("#stabilize").click(function() {
-		viz.stabilize();
-	})
+      if (cypher.length > 3) {
+        viz.renderWithCypher(cypher);
+      } else {
+        console.log("reload");
+        viz.reload();
+      }
+    });
 
-</script>
+    $("#stabilize").click(function() {
+      viz.stabilize();
+    });
+  </script>
 </html>
